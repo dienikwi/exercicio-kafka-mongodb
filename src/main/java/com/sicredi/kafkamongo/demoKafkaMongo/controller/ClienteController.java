@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
+import java.util.List;
+import java.awt.*;
 import java.net.URI;
 
 @AllArgsConstructor
@@ -26,6 +27,11 @@ public class ClienteController {
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(cliente.getCodCliente()).toUri();
         return  ResponseEntity.created(location).build();
+    }
+
+    @GetMapping("/cliente/listar")
+    public ResponseEntity<List<Cliente>> listar(){
+        return ResponseEntity.ok(clienteService.listar());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
