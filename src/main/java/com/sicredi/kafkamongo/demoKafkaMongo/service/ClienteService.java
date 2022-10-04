@@ -6,7 +6,6 @@ import com.sicredi.kafkamongo.demoKafkaMongo.repository.ClienteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -28,8 +27,12 @@ public class ClienteService {
         return clienteModel;
     }
 
-    public List<Cliente> listar() {
-        return clienteRepository.findAll();
+    public Optional<Cliente> listar(String codigo) {
+        Optional<Cliente> aux = clienteRepository.findById(codigo);
+        if (aux == null) {
+            throw new IllegalArgumentException("Cliente não existe.");
+        }
+        return aux;
     }
 
 }
