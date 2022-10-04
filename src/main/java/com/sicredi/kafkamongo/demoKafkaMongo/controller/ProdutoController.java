@@ -1,39 +1,41 @@
 package com.sicredi.kafkamongo.demoKafkaMongo.controller;
-
 import com.sicredi.kafkamongo.demoKafkaMongo.dto.ClienteDTO;
+import com.sicredi.kafkamongo.demoKafkaMongo.dto.ProdutoDTO;
 import com.sicredi.kafkamongo.demoKafkaMongo.model.Cliente;
+import com.sicredi.kafkamongo.demoKafkaMongo.model.Produto;
 import com.sicredi.kafkamongo.demoKafkaMongo.service.ClienteService;
+import com.sicredi.kafkamongo.demoKafkaMongo.service.ProdutoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
+import java.util.List;
 import java.net.URI;
 import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
-public class ClienteController {
-    private ClienteService clienteService;
+public class ProdutoController {
+    private ProdutoService produtoService;
 
-    @PostMapping("/cliente/add")
-    public ResponseEntity<Void> cadastraCliente(@RequestBody ClienteDTO clienteDto) {
-        Cliente cliente = clienteService.cadastraCliente(clienteDto);
+    @PostMapping("/produto/add")
+    public ResponseEntity<Void> cadastraProduto(@RequestBody ProdutoDTO produtoDto) {
+        Produto produto = produtoService.cadastraProduto(produtoDto);
 
-        if (cliente == null) {
+        if (produto == null) {
             return ResponseEntity.noContent().build();
         }
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(cliente.getCodCliente()).toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(produto.getCodProduto()).toUri();
         return  ResponseEntity.created(location).build();
     }
 
-    @GetMapping("/cliente/listar/{codigo}")
-    public ResponseEntity<Optional<Cliente>> listar(@PathVariable String codigo){
-        Optional<Cliente> cliente = null;
-        cliente = clienteService.listar(codigo);
-        return ResponseEntity.ok(cliente);
+    @GetMapping("/produto/listar/{codigo}")
+    public ResponseEntity<Optional<Produto>> listar(@PathVariable String codigo){
+        Optional<Produto> produto = null;
+        produto = produtoService.listar(codigo);
+        return ResponseEntity.ok(produto);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
