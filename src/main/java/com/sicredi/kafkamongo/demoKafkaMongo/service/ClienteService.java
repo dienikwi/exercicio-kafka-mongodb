@@ -18,7 +18,7 @@ public class ClienteService {
 
         if (cliente != null) {
             Optional<Cliente> aux = clienteRepository.findById(cliente.getCodCliente());
-            if (aux != null) {
+            if (aux.isPresent()) {
                 throw new IllegalArgumentException("Cliente já cadastrado.");
             }
             clienteModel = new Cliente(cliente.getCodCliente(), cliente.getNomeCliente());
