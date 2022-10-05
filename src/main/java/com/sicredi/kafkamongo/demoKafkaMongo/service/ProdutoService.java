@@ -18,7 +18,7 @@ public class ProdutoService {
 
         if (produto != null) {
             Optional<Produto> aux = produtoRepository.findById(produto.getCodProduto());
-            if (aux != null) {
+            if (aux.isPresent()) {
                 throw new IllegalArgumentException("Produto já cadastrado.");
             }
             produtoModel = new Produto(produto.getCodProduto(), produto.getNomeProduto());
